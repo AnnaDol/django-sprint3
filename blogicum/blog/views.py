@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404, render
 from datetime import datetime
 from .models import Category, Post
 
+
 def index(request):
     template_name = 'blog/index.html'
     posts = Post.objects.all().filter(
