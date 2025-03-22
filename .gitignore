@@ -147,3 +147,8 @@ dmypy.json
 
 # папки со статикой и медиа
 media/
+
+pytest2.ini
+/tests2
+/blogicum/templates2
+requirements2.txt
