@@ -1,13 +1,15 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+MAX_LENGTH_TITLE = 256
+
 User = get_user_model()
 
 
 class Category(models.Model):
     title = models.CharField(
         'Заголовок',
-        max_length=256
+        max_length=MAX_LENGTH_TITLE
     )
     description = models.TextField('Описание')
     slug = models.SlugField(
@@ -38,7 +40,7 @@ class Category(models.Model):
 class Location(models.Model):
     name = models.CharField(
         'Название места',
-        max_length=256
+        max_length=MAX_LENGTH_TITLE
     )
     is_published = models.BooleanField(
         'Опубликовано',
@@ -62,7 +64,7 @@ class Location(models.Model):
 class Post(models.Model):
     title = models.CharField(
         'Заголовок',
-        max_length=256
+        max_length=MAX_LENGTH_TITLE
     )
     text = models.TextField('Текст')
     pub_date = models.DateTimeField(
