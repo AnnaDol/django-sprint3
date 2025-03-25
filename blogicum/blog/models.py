@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 
 MAX_LENGTH_TITLE = 256
 
+MAX_VIEW_TITLE = 100
+
 User = get_user_model()
 
 
@@ -40,7 +42,7 @@ class Category(TotalModel):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.title
+        return self.title[0:MAX_VIEW_TITLE]
 
 
 class Location(TotalModel):
@@ -54,7 +56,7 @@ class Location(TotalModel):
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return self.name
+        return self.name[0:MAX_VIEW_TITLE]
 
 
 class Post(TotalModel):
@@ -94,4 +96,4 @@ class Post(TotalModel):
         ordering = ['-pub_date']
 
     def __str__(self):
-        return self.title
+        return self.title[0:MAX_VIEW_TITLE]
