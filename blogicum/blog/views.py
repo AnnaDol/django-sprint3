@@ -5,14 +5,16 @@ from .models import Category, Post
 
 MAX_POST = 5
 
-
-def index(request):
-    template_name = 'blog/index.html'
-    posts = Post.objects.all().filter(
+post_list = Post.objects.filter(
         pub_date__date__lte=datetime.now(),
         is_published=True,
         category__is_published=True
-    )[:MAX_POST]
+    )
+
+
+def index(request):
+    template_name = 'blog/index.html'
+    posts = post_list[:MAX_POST]
     context = {
         'posts': posts
     }
@@ -22,12 +24,8 @@ def index(request):
 def post_detail(request, post_id):
     template_name = 'blog/detail.html'
     post = get_object_or_404(
-        Post.objects.all().filter(
-            pk=post_id
-        ),
-        Q(pub_date__date__lte=datetime.now())
-        & Q(is_published=True)
-        & Q(category__is_published=True)
+        post_list,
+        pk=post_id
     )
     context = {
         'post': post
@@ -38,17 +36,13 @@ def post_detail(request, post_id):
 def category_posts(request, category_slug):
     template_name = 'blog/category.html'
     categories = get_object_or_404(
-        Category.objects.all().filter(
-            slug=category_slug
-        ),
+        Category,
+        slug=category_slug,
         is_published=True
     )
     posts = get_list_or_404(
-        Post.objects.all().filter(
-            pub_date__date__lte=datetime.now(),
-            category__slug=category_slug
-        ),
-        is_published=True
+        post_list,
+        category__slug=category_slug
     )
     context = {
         'category': categories,
