@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, get_list_or_404, render
 from datetime import datetime
 from .models import Category, Post
 
+MAX_POST = 5
+
 
 def index(request):
     template_name = 'blog/index.html'
@@ -10,7 +12,7 @@ def index(request):
         pub_date__date__lte=datetime.now(),
         is_published=True,
         category__is_published=True
-    ).order_by('-pub_date')[0:5]
+    )[:MAX_POST]
     context = {
         'posts': posts
     }
