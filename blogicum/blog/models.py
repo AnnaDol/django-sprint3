@@ -6,7 +6,23 @@ MAX_LENGTH_TITLE = 256
 User = get_user_model()
 
 
-class Category(models.Model):
+class TotalModel(models.Model):
+    is_published = models.BooleanField(
+        'Опубликовано',
+        default=True,
+        help_text='Снимите галочку, чтобы скрыть публикацию.'
+    )
+    created_at = models.DateTimeField(
+        'Добавлено',
+        auto_created=True,
+        auto_now_add=True
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Category(TotalModel):
     title = models.CharField(
         'Заголовок',
         max_length=MAX_LENGTH_TITLE
@@ -18,16 +34,6 @@ class Category(models.Model):
         help_text=('Идентификатор страницы для URL; '
         'разрешены символы латиницы, цифры, дефис и подчёркивание.')
     )
-    is_published = models.BooleanField(
-        'Опубликовано',
-        default=True,
-        help_text='Снимите галочку, чтобы скрыть публикацию.'
-    )
-    created_at = models.DateTimeField(
-        'Добавлено',
-        auto_created=True,
-        auto_now_add=True
-    )
 
     class Meta:
         verbose_name = 'категория'
@@ -37,20 +43,10 @@ class Category(models.Model):
         return self.title
 
 
-class Location(models.Model):
+class Location(TotalModel):
     name = models.CharField(
         'Название места',
         max_length=MAX_LENGTH_TITLE
-    )
-    is_published = models.BooleanField(
-        'Опубликовано',
-        default=True,
-        help_text='Снимите галочку, чтобы скрыть публикацию.'
-    )
-    created_at = models.DateTimeField(
-        'Добавлено',
-        auto_created=True,
-        auto_now_add=True
     )
 
     class Meta:
@@ -61,7 +57,7 @@ class Location(models.Model):
         return self.name
 
 
-class Post(models.Model):
+class Post(TotalModel):
     title = models.CharField(
         'Заголовок',
         max_length=MAX_LENGTH_TITLE
@@ -90,20 +86,11 @@ class Post(models.Model):
         null=True,
         verbose_name='Категория'
     )
-    is_published = models.BooleanField(
-        'Опубликовано',
-        default=True,
-        help_text='Снимите галочку, чтобы скрыть публикацию.'
-    )
-    created_at = models.DateTimeField(
-        'Добавлено',
-        auto_created=True,
-        auto_now_add=True
-    )
 
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+        default_related_name = 'post'
 
     def __str__(self):
         return self.title
