@@ -1,12 +1,13 @@
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, get_list_or_404, render
-from datetime import datetime
+from django.utils import timezone
+
 from .models import Category, Post
 
 MAX_POST = 5
 
 post_list = Post.objects.filter(
-        pub_date__date__lte=datetime.now(),
+        pub_date__date__lte=timezone.now(),
         is_published=True,
         category__is_published=True
     )
