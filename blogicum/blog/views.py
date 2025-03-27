@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.utils import timezone
 
@@ -7,10 +6,10 @@ from .models import Category, Post
 MAX_POST = 5
 
 post_list = Post.objects.filter(
-        pub_date__date__lte=timezone.now(),
-        is_published=True,
-        category__is_published=True
-    )
+    pub_date__date__lte=timezone.now(),
+    is_published=True,
+    category__is_published=True
+)
 
 
 def index(request):
