@@ -43,8 +43,7 @@ def category_posts(request, category_slug):
         slug=category_slug,
         is_published=True
     )
-    posts = get_list_or_404(
-        get_post_list(),
+    posts = get_post_list().filter(
         category__slug=category_slug
     )
     context = {
